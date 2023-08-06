@@ -21,6 +21,9 @@ export class Err {
 	}
 }
 
+/**
+ * Result that holds two states: `ok` and `err`.
+ */
 export class Result<O = Ok, E = Err> {
 	constructor(public readonly value: O | E, private _isOk = true) {}
 
@@ -83,6 +86,20 @@ export class Result<O = Ok, E = Err> {
 	}
 
 	/**
+	 * Similar to `Result.all`, but resolves AsyncResult first.
+	 *
+	 * ### Important!
+	 *
+	 * Assumes that supplied `AsyncResult`s don't throw.
+	 */
+	public static async allResolved(
+		results: AsyncResult<unknown, unknown>[]
+	): AsyncResult {
+		const resolved = await Promise.all(results);
+		return this.all(resolved);
+	}
+
+	/**
 	 * Takes an array of results and flattens them into a single result.
 	 */
 	public static collect<T extends Result<unknown, unknown>[]>(results: T) {
@@ -105,6 +122,20 @@ export class Result<O = Ok, E = Err> {
 	}
 
 	/**
+	 * Similar to `Result.collect`, but resolves AsyncResult first.
+	 *
+	 * ### Important!
+	 *
+	 * Assumes that supplied `AsyncResult`s don't throw.
+	 */
+	public static async collectResolved<
+		T extends AsyncResult<unknown, unknown>[]
+	>(results: T) {
+		const resolved = await Promise.all(results);
+		return this.collect(resolved);
+	}
+
+	/**
 	 * Converts a throwable function into `Result<T, unknown>`.
 	 */
 	public static catch<T>(f: () => T): Result<T, unknown> {
@@ -116,7 +147,7 @@ export class Result<O = Ok, E = Err> {
 	}
 
 	/**
-	 * Resolves a promise and catches errors.
+	 * Resolves a promise and catches errors, and turns the promise outcome into a result type.
 	 */
 	public static async resolve<T>(p: Promise<T>): AsyncResult<T, unknown> {
 		try {
@@ -127,6 +158,10 @@ export class Result<O = Ok, E = Err> {
 	}
 }
 
+/**
+ * A an alias for `Promise<Result<O, E>>`.
+ *
+ */
 export type AsyncResult<O = Ok, E = Err> = Promise<Result<O, E>>;
 
 export function ok(): Result<Ok, never>;
