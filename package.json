@@ -1,11 +1,21 @@
 {
-  "name": "sum-ts",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+	"name": "sum-ts",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts --minify",
+		"lint": "tsc",
+		"test": "vitest"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"typescript": "^5.1.6"
+	},
+	"devDependencies": {
+		"vitest": "^0.34.1"
+	}
 }
