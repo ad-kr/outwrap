@@ -17,7 +17,7 @@ export class Err {
 	 * ```
 	 */
 	public static Iden(..._: unknown[]) {
-		return new Ok();
+		return new Err();
 	}
 }
 
@@ -159,8 +159,7 @@ export class Result<O = Ok, E = Err> {
 }
 
 /**
- * A an alias for `Promise<Result<O, E>>`.
- *
+ * A an alias for `Promise<Result<O, E>>`.W
  */
 export type AsyncResult<O = Ok, E = Err> = Promise<Result<O, E>>;
 
