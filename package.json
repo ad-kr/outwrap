@@ -1,6 +1,6 @@
 {
 	"name": "outwrap",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "A small utility library that introduces some Rust-inspired types and concepts.",
 	"files": [
 		"dist"
