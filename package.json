@@ -1,7 +1,7 @@
 {
 	"name": "res.ts",
 	"version": "0.0.1",
-	"description": "",
+	"description": "A small utility library that introduces some Rust-inspired types and concepts.",
 	"files": [
 		"dist"
 	],
